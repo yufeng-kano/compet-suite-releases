@@ -15,7 +15,7 @@ Releases are currently **not code-signed**. Windows SmartScreen will warn on fir
 Quit the app first, then paste this into Terminal. It picks the Apple Silicon or Intel build, installs it to Applications, and opens it. Run the same command again to update; macOS copies do not update themselves.
 
 ```sh
-ARCH=$([ "$(sysctl -n hw.optional.arm64 2>/dev/null)" = 1 ] && echo arm64 || echo x64) && curl -fL -o /tmp/CompetConsultingSuite.zip "https://github.com/yufeng-kano/compet-suite-releases/releases/latest/download/CompetConsultingSuite-macOS-$ARCH.zip" && rm -rf "/Applications/競爭力企業管理顧問.app" && ditto -x -k /tmp/CompetConsultingSuite.zip /Applications && xattr -cr "/Applications/競爭力企業管理顧問.app" && open "/Applications/競爭力企業管理顧問.app"
+APP="/Applications/競爭力企業管理顧問.app" && ARCH=$([ "$(sysctl -n hw.optional.arm64 2>/dev/null)" = 1 ] && echo arm64 || echo x64) && curl -fL -o /tmp/CompetConsultingSuite.zip "https://github.com/yufeng-kano/compet-suite-releases/releases/latest/download/CompetConsultingSuite-macOS-$ARCH.zip" && { [ ! -e "$APP" ] || mv "$APP" "$(mktemp -d)/"; } && ditto -x -k /tmp/CompetConsultingSuite.zip /Applications && xattr -cr "$APP" && open "$APP"
 ```
 
 Manual install: download `CompetConsultingSuite-macOS-arm64.zip` (Apple Silicon) or `CompetConsultingSuite-macOS-x64.zip` (Intel) from the latest release, unzip, drag the app to Applications, then run:
